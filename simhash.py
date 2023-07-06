@@ -49,7 +49,7 @@ def hash_token_to_int(text: str) -> int:
     :param text:
     :return: a 64-bit non-negative integer
     """
-    return int.from_bytes(hashlib.blake2b(text.encode('utf8'), digest_size=8).digest(), 'big')
+    return int.from_bytes(hashlib.sha1(text.encode('utf8'), usedforsecurity=False).digest()[:HASH_LENGTH_BYTES], 'big')
 
 
 BITARRAY_LOOKUP = [[1 if bit_value == '1' else 0 for bit_value in f'{byte_value:08b}'] for byte_value in range(256)]
@@ -65,7 +65,7 @@ def hash_token_to_bitarray(text: str) -> List[int]:
     :return: a 64-bit non-negative integer
     """
     out = []
-    for byte in hashlib.blake2b(text.encode('utf8'), digest_size=8).digest():
+    for byte in hashlib.sha1(text.encode('utf8'), usedforsecurity=False).digest()[:HASH_LENGTH_BYTES]:
         out.extend(BITARRAY_LOOKUP[byte])
     return out
 
@@ -152,11 +152,11 @@ def tokenize(text: str) -> List[str]:
 def simhash(text: str) -> int:
     """
     >>> simhash('hello world')
-    18426460281723402111
+    18371825825242020347
     >>> simhash('hello alice')
-    17293520945628446461
+    18086429165450428347
     >>> simhash('hello bob')
-    17868013567453148415
+    16932653744053022126
 
     :param text:
     :return:
