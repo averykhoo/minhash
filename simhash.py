@@ -169,10 +169,22 @@ def integer_to_hex(number: int, *, length: int = HASH_LENGTH_BYTES) -> str:
 
 
 if __name__ == '__main__':
-    str_x = 'def int2hex(number: int, len: int = 8) -> str:'
-    str_y = 'def integer_to_hex(number: int, *, length: int = HASH_LENGTH_BYTES) -> str:'
+    def compare(str_x, str_y):
+        print(str_x)
+        print(str_y)
+        print(bin(simhash(str_x)))
+        print(bin(simhash(str_y)))
+        print(''.join(['^ '[x == y] for x, y in zip(bin(simhash(str_y)), bin(simhash(str_x)))]))
+        print(hamming_distance(simhash(str_x), simhash(str_y)))
+        print()
 
-    print(bin(simhash(str_x)))
-    print(bin(simhash(str_y)))
-    print(''.join(['^ '[x == y] for x, y in zip(bin(simhash(str_y)), bin(simhash(str_x)))]))
-    print(hamming_distance(simhash(str_x), simhash(str_y)))
+
+    compare('def int2hex(number: int, len: int = 8) -> str:',
+            'def integer_to_hex(number: int, *, length: int = HASH_LENGTH_BYTES) -> str:')
+
+    compare('hello world',
+            'hello alice')
+
+    compare('hello bob',
+            'hello alice')
+
