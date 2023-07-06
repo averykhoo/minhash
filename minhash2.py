@@ -159,17 +159,17 @@ if __name__ == '__main__':
     lt = MinHashHammingField(300)
     for word in name_lang:
         lt.insert(word)
-    print '{} names inserted in {} seconds'.format(len(name_lang), time.time() - t)
+    print('{} names inserted in {} seconds'.format(len(name_lang), time.time() - t))
 
     # REPL for testing input/output
     while 1:
         # get input and lowercase
-        input_word = raw_input('\nname to look up:\n')
+        input_word = input('\nname to look up:\n')
         input_word = input_word.lower().strip()
         # print or exit
         if not input_word.strip():
             break
-        print input_word
+        print(input_word)
         # print top-k results (k=8)
         skipped = 0
         for i, (candidate, score) in enumerate(lt.lookup(input_word)):
@@ -179,4 +179,4 @@ if __name__ == '__main__':
                 print(candidate, name_lang[candidate], score)
         # notify how many results were skipped
         if skipped:
-            print '(skipped {} other results)'.format(skipped)
+            print('(skipped {} other results)'.format(skipped))

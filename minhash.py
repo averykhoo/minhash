@@ -1,7 +1,8 @@
+import pprint
 import random
 
 import tabulate
-import pprint
+
 
 class SequenceID(dict):
     def __missing__(self, key):
@@ -37,7 +38,7 @@ def n_gram(text, n=2):
 def min_hash(seq):
     hash_val = [P] * dimension
     for item in seq:
-        for i in xrange(dimension):
+        for i in range(dimension):
             hash_val[i] = min(hash_val[i], (A[i] * seen[item] + B[i]) % P)
     return hash_val
 
@@ -92,10 +93,10 @@ if __name__ == '__main__':
         covar.append(new)
 
     # print
-    print tabulate.tabulate(covar, headers=[''] + items)
-    # print tabulate.tabulate(seen.items(), headers=['item', 'x'])
-    print 'count of n-grams =', len(seen)
-    # print tabulate.tabulate(hashes, headers=['seq'] + ['h%02d' % i for i in range(1, dimension + 1)])
+    print(tabulate.tabulate(covar, headers=[''] + items))
+    # print(tabulate.tabulate(seen.items(), headers=['item', 'x']))
+    print('count of n-grams =', len(seen))
+    # print(tabulate.tabulate(hashes, headers=['seq'] + ['h%02d' % i for i in range(1, dimension + 1)]))
 
-    print seen
-    print pprint.pformat(hashes)
+    print(seen)
+    print(pprint.pformat(hashes))

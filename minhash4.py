@@ -22,7 +22,7 @@ def harmonic(n):
 
 def get_n_grams(string, n=2):
     assert n > 0
-    for i in xrange(len(string) - n + 1):
+    for i in range(len(string) - n + 1):
         yield string[i:i + n]
 
 
@@ -188,7 +188,7 @@ class MinHashHammingFieldFibonacci(MinHashHammingField):
     def _hash(self, feature_id):
         # return [(self.phi_P * (feature_id + self.seed + idx + 1)) & 0xffffffff for idx in range(self.dim)]
         h_val = self.phi_P * (feature_id + self.seed)
-        for _ in xrange(self.dim):
+        for _ in range(self.dim):
             h_val = (h_val + self.phi_P) & 0xffffffff
             yield h_val
 

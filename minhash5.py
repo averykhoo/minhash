@@ -4,7 +4,8 @@ import math
 import random
 import time
 import warnings
-from collections import Counter, defaultdict
+from collections import Counter
+from collections import defaultdict
 from math import log
 
 import tabulate
@@ -22,7 +23,7 @@ def harmonic(n):
 
 def get_n_grams(string, n=2):
     assert n > 0
-    for i in xrange(len(string) - n + 1):
+    for i in range(len(string) - n + 1):
         yield string[i:i + n]
 
 
@@ -109,7 +110,7 @@ class MinHashHammingField(object):
     def _hash(self, feature_id):
         # return [(self.phi_P * (feature_id + self.seed + idx + 1)) & 0xffffffff for idx in range(self.dim)]
         h_val = self.delta * (feature_id + self.seed)
-        for _ in xrange(self.hash_iterations):
+        for _ in range(self.hash_iterations):
             h_val = (h_val + self.delta) & self.mask
             yield h_val
             yield self.mask - h_val  # prevents any hash from taking two consecutive columns
@@ -190,7 +191,7 @@ if __name__ == '__main__':
     while 1:
         # get input and lowercase
         # input_word = raw_input('\nname to look up:\n')
-        input_word = raw_input('\nname to look up:\n')
+        input_word = input('\nname to look up:\n')
         input_word = input_word.lower().strip()
         # print or exit
         if not input_word.strip():

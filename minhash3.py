@@ -216,7 +216,7 @@ if __name__ == '__main__':
     while 1:
         # get input and lowercase
         # input_word = raw_input('\nname to look up:\n')
-        input_word = raw_input('\nname to look up:\n')
+        input_word = input('\nname to look up:\n')
         input_word = input_word.lower().strip()
         # print or exit
         if not input_word.strip():
