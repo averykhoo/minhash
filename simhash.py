@@ -1,4 +1,5 @@
 import hashlib
+import re
 from functools import lru_cache
 from typing import List
 
@@ -42,6 +43,8 @@ def hamming_distance(x: int, y: int) -> int:
 def hash_token_to_int(text: str) -> int:
     """
     consistently hash a string to an integer
+
+    todo: consider using https://pypi.org/project/pyhash/ instead, for faster hashing
 
     :param text:
     :return: a 64-bit non-negative integer
@@ -113,13 +116,13 @@ def bitarray_to_integer(bitarray: List[int]) -> int:
 
 def integer_to_bitarray(number: int, *, bit_length: int = HASH_LENGTH_BYTES * 8) -> List[int]:
     """
-    >>> integer_to_bitarray(7, 5)
+    >>> integer_to_bitarray(7, bit_length=5)
     [0, 0, 1, 1, 1]
-    >>> integer_to_bitarray(8, 5)
+    >>> integer_to_bitarray(8, bit_length=5)
     [0, 1, 0, 0, 0]
-    >>> integer_to_bitarray(2, 1)
+    >>> integer_to_bitarray(2, bit_length=1)
     [0]
-    >>> integer_to_bitarray(bitarray_to_integer([1, 0, 1]), 5)
+    >>> integer_to_bitarray(bitarray_to_integer([1, 0, 1]), bit_length=5)
     [0, 0, 1, 0, 1]
 
     :param number:
@@ -131,15 +134,29 @@ def integer_to_bitarray(number: int, *, bit_length: int = HASH_LENGTH_BYTES * 8)
 
 
 def tokenize(text: str) -> List[str]:
-    return text.split()
+    """
+    split text into words (case-sensitive)
+    todo: consider using https://pypi.org/project/regex/ instead, for unicode grapheme support
+
+    >>> tokenize('hello world')
+    ['hello', 'world']
+    >>> tokenize('hello $USER')
+    ['hello', 'USER']
+
+    :param text:
+    :return:
+    """
+    return re.findall(r'\w+', text)
 
 
 def simhash(text: str) -> int:
     """
     >>> simhash('hello world')
     18426460281723402111
-    >>> simhash('hello $USER')
-    18444489699396762749
+    >>> simhash('hello alice')
+    17293520945628446461
+    >>> simhash('hello bob')
+    17868013567453148415
 
     :param text:
     :return:
